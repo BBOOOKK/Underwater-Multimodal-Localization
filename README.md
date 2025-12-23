@@ -1,9 +1,28 @@
-# Underwater-Multimodal-Localization
-Underwater Multimodal Localization Technology
+# 水下机器人多模态定位数据代码库
 
-## Version 0.0
+## 项目目录结构
 
-本次数据由process脚本处理，其中实现功能如下：
+```
+.
+├── README.md                    # 项目说明文档
+├── imu_dvl动捕数据.zip          # IMU-DVL动捕原始数据
+├── processed.zip                # 处理后的数据
+├── raw.zip                      # 原始数据
+└── code/
+    └── process_rotate.py        # 数据处理脚本（异常值处理、重叠截断、时间戳对齐等）
+```
+
+---
+
+## 2025年12月24日更新
+
+**更新者**：曹帅  
+**更新内容**：数据处理功能与代码
+
+
+## 代码说明
+
+**主脚本**：`code/process_rotate.py`
 
 ### 数据处理功能
 
@@ -20,7 +39,7 @@ Underwater Multimodal Localization Technology
 
 5. **航位推算**
 
-### 关键参数说明
+### 代码参数
 
 - **BASE_DIR**: 主目录
 - **SUB_DIR**: 子目录  
@@ -28,4 +47,4 @@ Underwater Multimodal Localization Technology
 - **MANUAL_OFFSET**: 手动调整初始航向角，填0自动寻找角度
 - **LIMIT_COUNT**: 决定连续异常值补齐最大数量，默认为5
 
-> 有问题联系 #曹帅
+---
