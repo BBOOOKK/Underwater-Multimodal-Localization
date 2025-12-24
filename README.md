@@ -6,14 +6,13 @@
 ```
 .
 ├── README.md                    # 项目说明文档
-├── .gitignore                   # Git忽略文件
-├── CNN-MODEL/                   # 深度学习去噪与姿态解算模块
-│   ├── figures/                 # 结果可视化图表
-│   │   ├── boxplot.jpg          # 箱线图
-│   │   ├── methode.jpg          # 方法示意图
-│   │   ├── roe.jpg              # 旋转误差图
-│   │   └── rpy.jpg              # 滚转-俯仰-偏航图
-│   └── src/                     # 核心算法源码
+├── CNN-MODEL/                   # IMU标定
+│   ├── figures/                 # 结果可视化
+│   │   ├── boxplot.jpg          
+│   │   ├── methode.jpg         
+│   │   ├── roe.jpg              
+│   │   └── rpy.jpg              
+│   └── src/                     # 核心算法
 │       ├── dataset.py           # PyTorch数据集加载类
 │       ├── learning.py          # 模型训练与验证核心逻辑
 │       ├── lie_algebra.py       # 李群李代数工具库 (SO3 Exp/Log运算)
@@ -24,11 +23,11 @@
 │       ├── pic.py               # 绘图与可视化工具脚本
 │       ├── process.py           # 数据预处理核心流程
 │       └── utils.py             # 通用工具函数库
-├── data process/                # 数据处理模块
-│   └── process_rotate.py        # 数据处理脚本（异常值处理、时间戳对齐等）
-└── IMU + DVL/                   # 传统处理与对比实验模块
-    ├── CNN-LSTM.py              # CNN-LSTM混合神经网络模型
-    └── comparison_experiment1.py # 模型对比实验脚本
+├── data process/                # 数据处理
+│   └── process_rotate.py 
+└── IMU + DVL/                   # IMU-DVL融合定位
+    ├── CNN-LSTM.py              # CNN-LSTM融合模型
+    └── comparison_experiment1.py # 对比实验
 ```
 
 ---
