@@ -6,38 +6,31 @@
 ```
 .
 ├── README.md                    # 项目说明文档
-├── imu_dvl动捕数据.zip          # IMU-DVL动捕原始数据
-├── processed.zip                # 处理后的数据
-├── raw.zip                      # 原始数据
-├── code/                        # 传统处理与对比实验代码
-│   ├── process_rotate.py        # 数据处理脚本
-│   ├── CNN-LSTM.py              # CNN-LSTM混合神经网络模型
-│   └── comparison_experiment1.py # 对比实验
-└── CNN-MODEL/                   # 深度学习去噪与姿态解算项目
-    ├── figures/                 # 结果可视化图表 (boxplot, trajectories等)
-    ├── src/                     # 核心算法源码
-    │   ├── data/                # 数据存放目录
-    │   │   └── MY_DATA/         # 自定义数据集
-    │   ├── check_gyro_unit.py   # 陀螺仪数据单位检查工具
-    │   ├── dataset.py           # PyTorch数据集加载类 (Dataset/Dataloader)
-    │   ├── learning.py          # 模型训练与验证核心逻辑
-    │   ├── lie_algebra.py       # 李群李代数工具库 (SO3 Exp/Log 运算)
-    │   ├── losses.py            # 损失函数定义 (Loss Functions)
-    │   ├── networks.py          # Dilated CNN 网络架构定义
-    │   ├── pic.py               # 绘图与可视化工具脚本
-    │   ├── process.py           # 数据预处理核心流程
-    │   ├── test_new_dataset.py  # 新数据集测试与推理脚本
-    │   └── utils.py             # 通用工具函数库 (加载/保存/计算指标)
-    ├── check_data_quality.py    # 数据质量检查脚本
-    ├── convert_my_data.py       # 自定义数据格式转换工具
-    ├── evaluate_result.py       # 结果评估脚本 (计算AOE/RWE误差)
-    ├── imu_to_bvh.py            # IMU数据转BVH骨骼动画工具
-    ├── main_EUROC.py            # Euroc数据集训练入口
-    ├── main_TUMVI.py            # TUM-VI数据集训练入口
-    ├── requirements.txt         # 项目依赖库清单
-    └── LICENCE                  # 许可证文件
-
+├── .gitignore                   # Git忽略文件
+├── CNN-MODEL/                   # 深度学习去噪与姿态解算模块
+│   ├── figures/                 # 结果可视化图表
+│   │   ├── boxplot.jpg          # 箱线图
+│   │   ├── methode.jpg          # 方法示意图
+│   │   ├── roe.jpg              # 旋转误差图
+│   │   └── rpy.jpg              # 滚转-俯仰-偏航图
+│   └── src/                     # 核心算法源码
+│       ├── dataset.py           # PyTorch数据集加载类
+│       ├── learning.py          # 模型训练与验证核心逻辑
+│       ├── lie_algebra.py       # 李群李代数工具库 (SO3 Exp/Log运算)
+│       ├── losses.py            # 损失函数定义
+│       ├── main_EUROC.py        # Euroc数据集训练入口
+│       ├── main_TUMVI.py        # TUM-VI数据集训练入口
+│       ├── networks.py          # Dilated CNN网络架构定义
+│       ├── pic.py               # 绘图与可视化工具脚本
+│       ├── process.py           # 数据预处理核心流程
+│       └── utils.py             # 通用工具函数库
+├── data process/                # 数据处理模块
+│   └── process_rotate.py        # 数据处理脚本（异常值处理、时间戳对齐等）
+└── IMU + DVL/                   # 传统处理与对比实验模块
+    ├── CNN-LSTM.py              # CNN-LSTM混合神经网络模型
+    └── comparison_experiment1.py # 模型对比实验脚本
 ```
+
 ---
 
 ## 2025年12月24日更新 (2)
@@ -49,7 +42,7 @@
 
 **CNN-MODEL/** - 基于空洞卷积神经网络(Dilated CNN)的陀螺仪去噪与姿态解算完整工程
 
-### 主要功能
+### 主要内容
 * **networks.py**: 定义了用于去噪的 Dilated CNN 网络模型结构。
 * **lie_algebra.py**: 实现了流形上的李代数运算 (Exp/Log)，保证姿态更新的数学严谨性。
 * **learning.py**: 封装了模型的训练循环（Training Loop）、验证 (Validation) 与模型保存逻辑。
@@ -66,12 +59,12 @@
 ### 新增代码文件
 
 1. **CNN-LSTM.py** - CNN-LSTM混合神经网络模型
-2. **comparison_experiment1.py** - 模型对比实验脚本
+2. **comparison_experiment1.py** - CNN/LSTM/IONet/TCN对比实验脚本
 
-### 主要功能
+### 主要内容
 
 * 基于清洗后数据进行对比试验：CNN/LSTM/IONet/TCN
-* 复现论文的CNN-LSTM混合神经网络模型
+* 复现论文CNN-LSTM混合神经网络模型
 
 ---
 
@@ -85,7 +78,7 @@
 
 **process_rotate.py** - 数据处理脚本
 
-### 主要功能
+### 主要内容
 
 * 异常值处理（5个数据异常以内补齐）
 * 重叠截断（从各传感器、真值同时有效的部分开始）
