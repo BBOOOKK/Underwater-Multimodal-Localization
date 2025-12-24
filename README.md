@@ -36,17 +36,18 @@
 ## 2025年12月24日更新 (2)
 
 **更新者**：姜昕彤
-**更新内容**：CNN-MODEL 深度学习去噪与姿态解算模块
+
+**更新内容**：CNN深度学习去噪与姿态解算模块
 
 ### 新增工程文件
 
-**CNN-MODEL/** - 基于空洞卷积神经网络(Dilated CNN)的陀螺仪去噪与姿态解算完整工程
+**CNN-MODEL/** - 基于空洞卷积神经网络(Dilated CNN)的陀螺仪去噪与姿态解算工程
 
 ### 主要内容
-* **networks.py**: 定义了用于去噪的 Dilated CNN 网络模型结构。
-* **lie_algebra.py**: 实现了流形上的李代数运算 (Exp/Log)，保证姿态更新的数学严谨性。
-* **learning.py**: 封装了模型的训练循环（Training Loop）、验证 (Validation) 与模型保存逻辑。
-* **dataset.py**: 处理复杂的多模态数据加载，支持 PyTorch `DataLoader` 接口。
+* **networks.py**: 定义了用于去噪的 Dilated CNN 网络模型结构
+* **lie_algebra.py**: 实现了流形上的李代数运算 (Exp/Log)
+* **learning.py**: 封装了模型的训练循环（Training Loop）、验证 (Validation) 与模型保存逻辑
+* **dataset.py**: 处理复杂的多模态数据加载，支持 PyTorch `DataLoader` 接口
 
 ---
 
