@@ -40,7 +40,7 @@
 
 ### 新增工程文件
 
-**CNN-MODEL/** - 基于空洞卷积神经网络(Dilated CNN)的陀螺仪去噪与姿态解算工程
+1. **CNN-MODEL** - 基于空洞卷积神经网络(Dilated CNN)的陀螺仪去噪与姿态解算工程
 
 ### 主要内容
 * **networks.py**: 定义了用于去噪的 Dilated CNN 网络模型结构
@@ -76,7 +76,7 @@
 
 ### 新增代码文件
 
-**process_rotate.py** - 数据处理脚本
+1. **process_rotate.py** - 数据处理脚本
 
 ### 主要内容
 
