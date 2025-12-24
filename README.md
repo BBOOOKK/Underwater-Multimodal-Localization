@@ -9,9 +9,9 @@
 ├── processed.zip                # 处理后的数据
 ├── raw.zip                      # 原始数据
 └── code/
-    ├── process_rotate.py        # 数据处理脚本（异常值处理、重叠截断、时间戳对齐等）
-    ├── CNN-LSTM.py              # CNN-LSTM混合神经网络模型
-    └── comparison_experiment1.py # 模型对比实验脚本
+    ├── process_rotate.py        # 数据处理脚本
+    ├── CNN-LSTM.py              # CNN-LSTM混合神经网络模型（论文复现）
+    └── comparison_experiment1.py # 对比实验
 ```
 
 
@@ -20,23 +20,23 @@
 ## 2025年12月24日更新
 
 **更新者**：李书宇  
-**更新内容**：对比实验
+**更新内容**：对比实验代码
 
 ### 新增代码文件
 1. **CNN-LSTM.py** - CNN-LSTM混合神经网络模型
 2. **comparison_experiment1.py** - 模型对比实验脚本
 
 ### 主要功能
-- 实现CNN-LSTM混合架构用于水下定位
-- 添加模型训练与评估流程
-- 进行不同模型的对比实验分析
+- 基于清洗后数据进行对比试验：CNN/LSTM/IONet/TCN
+- 复现论文的CNN-LSTM混合神经网络模型
+- 
 
 ---
 
 ## 2025年12月23日更新
 
 **更新者**：曹帅  
-**更新内容**：数据处理功能与代码
+**更新内容**：数据处理代码
 
 ## 新增代码文件
 
