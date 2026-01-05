@@ -42,7 +42,7 @@
 
 ### 新增代码文件
 
-1. **generate_gt_colmap.py ** - 使用colmap生成参考轨迹脚本
+1. **generate_gt_colmap.py** - 使用colmap生成参考轨迹脚本
 
 ### 主要内容
 * 基于SOLAQUA数据集，解析bag文件
