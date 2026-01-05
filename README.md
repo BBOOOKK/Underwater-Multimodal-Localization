@@ -23,12 +23,30 @@
 │       ├── pic.py               # 绘图与可视化工具脚本
 │       ├── process.py           # 数据预处理核心流程
 │       └── utils.py             # 通用工具函数库
+│
+├── MonoVision-Depth-Aided-Trajectory/  # 单目+深度约束生成参考轨迹
+│   └── generate_gt_colmap.py     
 ├── data process/                # 数据处理
 │   └── process_rotate.py 
 └── IMU + DVL/                   # IMU-DVL融合定位
     ├── CNN-LSTM.py              # CNN-LSTM融合模型
     └── comparison_experiment1.py # 对比实验
 ```
+
+---
+## 2026年1月5日更新
+
+**更新者**：孙超
+
+**更新内容**：单目+深度约束生成参考轨迹代码
+
+### 新增代码文件
+
+1. **generate_gt_colmap.py ** - 使用colmap生成参考轨迹脚本
+
+### 主要内容
+* 基于SOLAQUA数据集，解析bag文件
+* 通过单目视觉信息+深度计软约束生成参考轨迹
 
 ---
 
