@@ -1,0 +1,18 @@
+{
+  "timestamp": "20260203_153412",
+  "device": "mps",
+  "input_len": 200,
+  "batch_size": 256,
+  "epochs": 50,
+  "patience": 10,
+  "learning_rate": 0.001,
+  "train_samples": 129812,
+  "test_samples": 31585,
+  "train_files": [
+    "SenseINS_aligned_1.csv",
+    "SenseINS_aligned_2.csv",
+    "SenseINS_aligned_3.csv",
+    "SenseINS_aligned_4.csv"
+  ],
+  "test_file": "SenseINS_aligned_5.csv"
+}

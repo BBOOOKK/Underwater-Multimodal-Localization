@@ -28,10 +28,35 @@
 │   └── generate_gt_colmap.py     
 ├── data process/                # 数据处理
 │   └── process_rotate.py 
-└── IMU + DVL/                   # IMU-DVL融合定位
-    ├── CNN-LSTM.py              # CNN-LSTM融合模型
-    └── comparison_experiment1.py # 对比实验
+└── IMU-DVL/                    # IMU-DVL融合定位
+    └── Compare_Experiment/     # 多模型对比实验
+        ├── Com.py              # 四模型对比实验主程序
+        ├── config.json         # 实验配置文件
+        ├── results_summary.csv # 实验结果汇总表
+        └── pth/                # 模型权重文件
 ```
+
+---
+## 2026年2月3日更新
+
+**更新者**：李书宇
+
+**更新内容**：IMU-DVL多模型对比实验
+
+### 新增代码文件
+
+1. **Com.py** - 四模型对比实验主程序（CNN/LSTM/IONet/TCN）
+2. **config.json** - 实验配置文件
+3. **results_summary.csv** - 实验结果汇总表
+
+### 主要内容
+* **数据预处理**：深度异常值清洗、位移增量计算
+* **模型架构**：
+  - Multi-branch CNN：4层1D卷积网络
+  - 2-Layer LSTM：双层LSTM网络
+  - IONet：双向LSTM网络
+  - 2-Layer TCN：时序卷积网络
+* **评估指标**：N-SRMSE、RMSE、端点误差、推理时间
 
 ---
 ## 2026年1月5日更新
