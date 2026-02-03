@@ -33,7 +33,13 @@
         ├── Com.py              # 四模型对比实验主程序
         ├── config.json         # 实验配置文件
         ├── results_summary.csv # 实验结果汇总表
-        └── pth/                # 模型权重文件
+        ├── pth/                # 模型权重文件
+        └── 0730data/           # 2025年7月30日实验数据集
+            ├── SenseINS_aligned_1.csv
+            ├── SenseINS_aligned_2.csv
+            ├── SenseINS_aligned_3.csv
+            ├── SenseINS_aligned_4.csv
+            └── SenseINS_aligned_5.csv
 ```
 
 ---
@@ -41,7 +47,7 @@
 
 **更新者**：李书宇
 
-**更新内容**：IMU-DVL多模型对比实验
+**更新内容**：IMU-DVL多模型对比实验、0730实验数据
 
 ### 新增代码文件
 
@@ -49,14 +55,13 @@
 2. **config.json** - 实验配置文件
 3. **results_summary.csv** - 实验结果汇总表
 
+### 新增数据集
+**0730data/** - 0730实验数据集
+
 ### 主要内容
-* **数据预处理**：深度异常值清洗、位移增量计算
-* **模型架构**：
-  - Multi-branch CNN：4层1D卷积网络
-  - 2-Layer LSTM：双层LSTM网络
-  - IONet：双向LSTM网络
-  - 2-Layer TCN：时序卷积网络
-* **评估指标**：N-SRMSE、RMSE、端点误差、推理时间
+* **数据预处理**：异常值清洗、位移增量计算、时间戳对齐
+* **模型**：CNN、LSTM、IONet、TCN
+* **评估指标**：MSE、N-SRMSE、RMSE、MaxError、Time
 
 ---
 ## 2026年1月5日更新
