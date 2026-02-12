@@ -1,0 +1,72 @@
+seeds:
+  use_seeds: true
+  id: 42
+
+data:
+  imu_freq: 100.0
+  sample_freq: 20.0
+  # 🔥 [修改] 指向您生成的 MoE 数据文件夹 (注意使用正斜杠 / )
+  train_dir: "E:/电脑管家迁移文件/xwechat_files/wxid_9ong8xwpxo7f22_51c6/msg/file/2026-01/ronin-net(1)/ronin-net/denoise/output_csv_moe"
+  # 验证集和测试集留空或指向同一目录，代码会自动划分
+  validation_dir: ""
+  test_dir: "E:/电脑管家迁移文件/xwechat_files/wxid_9ong8xwpxo7f22_51c6/msg/file/2026-01/ronin-net(1)/ronin-net/denoise/output_csv_moe"
+
+  random_partition: true
+  train_rate: 0.90
+  valid_rate: 0.10
+  data_rate: 1.0
+
+model:
+  model_name: resnet_lstm
+  # 🔥 [注意] 确保这个子配置文件的路径也是正确的，如果是相对路径通常没问题
+  model_yaml: './config/resnet_lstm.yaml'
+  pred_velocity: true
+
+train:
+  # 🔥 [修改] 输出目录改为 Windows 路径
+  out_dir: "E:/电脑管家迁移文件/xwechat_files/wxid_9ong8xwpxo7f22_51c6/msg/file/2026-01/ronin-net(1)/ronin-net/denoise/output/ronin_train_moe/"
+
+  use_pretrain_model: false
+  # 🔥 [关键] Windows 必须单卡
+  use_multi_gpu: false
+  batch_size: 32
+  epochs: 200
+  start_cov_epochs: 50
+
+  # 🔥 [关键] Windows 下必须设为 0，否则会报错 "BrokenPipeError"
+  n_workers: 0
+
+  seq_len: 40 # 序列长度，可根据显存调整
+  predict_start: 0
+  predict_end: 10
+
+  optimizer:
+    learning_rate: 0.0001
+    method: Adam
+    weight_decay: 0.0001
+
+  scheduler:
+    factor: 0.1
+    patience: 20
+
+augment:
+  # 数据增强参数保持不变
+  feat_acc_sigma: 0.005
+  feat_gyr_sigma: 0.0005
+  add_bias_noise: true
+  accel_bias_range: 0.2
+  gyro_bias_range: 0.01
+  add_gravity_noise: true
+  gravity_noise_theta_range: 5.0
+
+val:
+  batch_size: 32
+
+test:
+  # 🔥 [修改] 测试结果输出目录
+  out_dir: "E:/电脑管家迁移文件/xwechat_files/wxid_9ong8xwpxo7f22_51c6/msg/file/2026-01/ronin-net(1)/ronin-net/denoise/output/ronin_train_moe/test_results/"
+  batch_size: 1
+
+schemes:
+  train: true
+  test: true

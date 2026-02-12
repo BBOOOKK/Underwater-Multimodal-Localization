@@ -1,0 +1,63 @@
+seeds:
+  use_seeds: True
+  id: 42
+
+data:
+  train_dir: /home/ouc/ronin-net/output_csv
+  validation_dir: /home/ouc/ronin-net/output_csv
+  test_dir: /home/ouc/ronin-net/data/all_data
+  
+  random_partition: True
+  train_rate: 0.90
+  valid_rate: 0.10
+  data_rate: 1.0
+  imu_freq: 100.0
+  sample_freq: 20.0
+
+augment:
+  feat_acc_sigma: 0.005
+  feat_gyr_sigma: 0.0005
+  add_bias_noise: True
+  accel_bias_range: 0.2
+  gyro_bias_range: 0.01
+  add_gravity_noise: True
+  gravity_noise_theta_range: 5.0
+
+model:
+  model_name: resnet_lstm
+  model_yaml: './config/resnet_lstm.yaml'
+  pred_velocity: False
+
+train:
+  out_dir: /home/ouc/ronin-net/output/transfer_learning_final/
+  
+  use_pretrain_model: False
+  
+  use_multi_gpu: True
+  batch_size: 32
+  epochs: 300
+  start_cov_epochs: 50
+  n_workers: 4
+  seq_len: 40
+  predict_start: 0
+  predict_end: 10
+  
+  optimizer:
+    learning_rate: 0.0001
+    method: Adam
+    weight_decay: 0.0001
+  
+  scheduler:
+    factor: 0.1
+    patience: 20
+
+val:
+  batch_size: 32
+
+test:
+  out_dir: /home/ouc/ronin-net/output/transfer_learning_final/test/
+  batch_size: 1
+
+schemes:
+  train: True
+  test: True

@@ -1,0 +1,63 @@
+seeds:
+  use_seeds: True
+  id: 42
+
+data:
+  # 1. 核心修改：只指向纯 SNS 数据的路径
+  train_dir: /home/ouc/jxt/data/processed_data
+  test_dir: /home/ouc/jxt/data/processed_data
+  validation_dir: /home/ouc/jxt/data/processed_data
+  # 2. 核心修改：开启随机划分
+  random_partition: True
+  
+  data_rate: 1.0
+  train_rate: 0.8
+  test_rate: 0.1
+  valid_rate: 0.1
+
+  imu_freq: 100.0
+  sample_freq: 20
+
+augment:
+  feat_acc_sigma: 0.0001
+  feat_gyr_sigma: 0.00001
+  add_bias_noise: True
+  accel_bias_range: 0.1
+  gyro_bias_range: 0.002
+  add_gravity_noise: True
+  gravity_noise_theta_range: 5
+
+model:
+  model_name: resnet_lstm
+  model_yaml: './config/resnet_lstm.yaml'
+  pred_velocity: False
+
+train:
+  out_dir: /home/ouc/jxt/output/only_sns_v1/
+  use_pretrain_model: False
+  use_multi_gpu: False
+  batch_size: 64      
+  epochs: 300         
+  start_cov_epochs: 50
+  n_workers: 4
+  seq_len: 100        
+  predict_start: 0
+  predict_end: 10
+  optimizer:
+    learning_rate: 0.0001
+    method: Adam
+    weight_decay: 0.0
+  scheduler:
+    factor: 0.1
+    patience: 15
+
+val:
+  batch_size: 1024
+
+test:
+  out_dir: /home/ouc/jxt/output/only_sns_v1/test/
+  batch_size: 1024
+
+schemes:
+  train: True
+  test: True

@@ -1,118 +1,94 @@
 
+---
+
 # 水下机器人多模态定位数据代码库
 
-## 项目目录结构
+## 最新项目目录结构 (2026-02-12 更新)
 
-```
+```text
 .
-├── README.md                    # 项目说明文档
-├── CNN-MODEL/                   # IMU标定
-│   ├── figures/                 # 结果可视化
-│   │   ├── boxplot.jpg          
-│   │   ├── methode.jpg         
-│   │   ├── roe.jpg              
-│   │   └── rpy.jpg              
-│   └── src/                     # 核心算法
-│       ├── dataset.py           # PyTorch数据集加载类
-│       ├── learning.py          # 模型训练与验证核心逻辑
-│       ├── lie_algebra.py       # 李群李代数工具库 (SO3 Exp/Log运算)
-│       ├── losses.py            # 损失函数定义
-│       ├── main_EUROC.py        # Euroc数据集训练入口
-│       ├── main_TUMVI.py        # TUM-VI数据集训练入口
-│       ├── networks.py          # Dilated CNN网络架构定义
-│       ├── pic.py               # 绘图与可视化工具脚本
-│       ├── process.py           # 数据预处理核心流程
-│       └── utils.py             # 通用工具函数库
+├── ronin-net/                   # 【新增】基于MoE架构的去噪与定位网络
+│   ├── config/                  # 配置文件 (resnet_lstm.yaml, only_sns.yaml等)
+│   ├── data/                    # 数据集目录
+│   │   ├── all_data/            # 原始全量数据集
+│   │   └── processed_data/      # 预处理后的有效数据集
+│   ├── dataloader/              # PyTorch 数据加载实现 (dataset.py)
+│   ├── denoise/                 # 核心去噪模块 (基于第一版Gyro-net的优化版)
+│   │   ├── src/                 # 专家模型训练与调试 (debug_moe.py, check_specialists.py)
+│   │   └── output/              # 训练输出与结果保存
+│   ├── model/                   # 网络架构定义 (model_lstm.py, losses.py)
+│   ├── utils/                   # 工具库 (指标计算 metric.py, 后处理 postprocess.py)
+│   ├── weights/                 # 模型权重文件 (weights.pt)
+│   ├── main_net.py              # 模块主程序入口
+│   └── train.py / test.py       # 训练与测试脚本
 │
+├── CNN-MODEL/                   # IMU标定
+│   ├── figures/                 # 结果可视化 (boxplot.jpg, rpy.jpg等)
+│   └── src/                     # 核心算法 (lie_algebra.py, networks.py等)
 ├── MonoVision-Depth-Aided-Trajectory/  # 单目+深度约束生成参考轨迹
-│   └── generate_gt_colmap.py     
-├── data process/                # 数据处理
-│   └── process_rotate.py 
+│   └── generate_gt_colmap.py     # 基于Colmap的真值生成脚本
+├── data process/                # 数据处理基础脚本
+│   └── process_rotate.py        # 坐标转换与数据清洗
 └── IMU-DVL/                    # IMU-DVL融合定位
-    └── Compare_Experiment/     # 多模型对比实验
-        ├── Com.py              # 四模型对比实验主程序
-        ├── config.json         # 实验配置文件
-        ├── results_summary.csv # 实验结果汇总表
-        ├── pth/                # 模型权重文件
-        └── 0730data/           # 2025年7月30日实验数据集
-            ├── SenseINS_aligned_1.csv
-            ├── SenseINS_aligned_2.csv
-            ├── SenseINS_aligned_3.csv
-            ├── SenseINS_aligned_4.csv
-            └── SenseINS_aligned_5.csv
+    └── Compare_Experiment/      # 多模型对比实验
+        ├── Com.py               # 四模型对比实验主程序
+        ├── config.json          # 实验配置文件
+        ├── results_summary.csv  # 实验结果汇总表
+        └── 0730data/            # 2025年7月30日实验数据集
+
 ```
 
 ---
+
+## 2026年2月12日更新
+
+**更新者**：姜昕彤
+
+**更新内容**：新增 **ronin-net** 模块（基于 MoE 架构的陀螺仪去噪与定位优化）
+
+### 核心改进：ronin-net 模块
+
+该模块是针对早期去噪算法的重大升级，主要特点包括：
+
+* **MoE (Mixture of Experts) 架构**：在 `denoise` 模块中采用了混合专家架构，通过 `train_specialists.py` 训练了 **4 个专家模型**，以应对不同维度的传感器噪声。
+* **有效数据管理**：在 `data/` 目录下将数据严格划分为 `all-data`（全量）与 `process-data`（已处理），确保训练集的纯净度。
+* **配置化设计**：支持通过 `config/` 下的 YAML 文件快速切换不同的骨干网络（如 ResNet, LSTM）及超参数。
+* **调试与分析工具**：新增 `debug_moe.py` 和 `check_specialists.py`，用于可视化分析各专家在不同运动状态下的贡献权重。
+
+---
+
 ## 2026年2月3日更新
 
 **更新者**：李书宇
 
-**更新内容**：IMU-DVL多模型对比实验、0730实验数据
+**更新内容**：IMU-DVL 多模型对比实验、0730 实验数据
 
-### 新增代码文件
+### 新增主要内容
 
-1. **Com.py** - 四模型对比实验主程序（CNN/LSTM/IONet/TCN）
-2. **config.json** - 实验配置文件
-3. **results_summary.csv** - 实验结果汇总表
-
-### 新增数据集
-**0730data** - 0730实验数据集
-
-### 主要内容
-* **数据预处理**：异常值清洗、位移增量计算、时间戳对齐
-* **模型**：CNN、LSTM、IONet、TCN
-* **评估指标**：MSE、N-SRMSE、RMSE、MaxError、Time
+* **Com.py**：涵盖 CNN、LSTM、IONet、TCN 四种模型的对比实验主程序。
+* **0730data**：包含 5 组已对齐的 `SenseINS_aligned` 实验数据集。
+* **指标评估**：支持 MSE、N-SRMSE、RMSE、MaxError 及运行耗时（Time）等多维度评估。
 
 ---
+
 ## 2026年1月5日更新
 
 **更新者**：孙超
 
-**更新内容**：单目+深度约束生成参考轨迹代码
+**更新内容**：单目 + 深度约束生成参考轨迹代码
 
-### 新增代码文件
-
-1. **generate_gt_colmap.py** - 使用colmap生成参考轨迹脚本
-
-### 主要内容
-* 基于SOLAQUA数据集，解析bag文件
-* 通过单目视觉信息+深度计软约束生成参考轨迹
+* 基于 **SOLAQUA** 数据集，通过单目视觉与深度计软约束生成高精度参考轨迹（Ground Truth）。
 
 ---
 
-## 2025年12月24日更新 (2)
+## 2025年12月24日更新
 
-**更新者**：姜昕彤
+**更新者**：姜昕彤、李书宇
 
-**更新内容**：CNN深度学习去噪与姿态解算模块
+**更新内容**：CNN 深度学习去噪与姿态解算、对比实验复现
 
-### 新增工程文件
-
-1. **CNN-MODEL** - 基于空洞卷积神经网络(Dilated CNN)的陀螺仪去噪与姿态解算工程
-
-### 主要内容
-* **networks.py**: 定义了用于去噪的 Dilated CNN 网络模型结构
-* **lie_algebra.py**: 实现了流形上的李代数运算 (Exp/Log)
-* **learning.py**: 封装了模型的训练循环（Training Loop）、验证 (Validation) 与模型保存逻辑
-* **dataset.py**: 处理复杂的多模态数据加载，支持 PyTorch `DataLoader` 接口
-
----
-
-## 2025年12月24日更新 (1)
-
-**更新者**：李书宇
-
-**更新内容**：对比实验代码
-
-### 新增代码文件
-
-1. **CNN-LSTM.py** - CNN-LSTM混合神经网络模型
-2. **comparison_experiment1.py** - CNN/LSTM/IONet/TCN对比实验脚本
-
-### 主要内容
-
-* 基于清洗后数据进行对比试验：CNN/LSTM/IONet/TCN
-* 复现论文CNN-LSTM混合神经网络模型
+* **CNN-MODEL**：基于空洞卷积（Dilated CNN）与流形李代数（SO3 Exp/Log）的姿态解算工程。
+* **CNN-LSTM.py**：复现相关论文的混合神经网络模型。
 
 ---
 
@@ -120,21 +96,9 @@
 
 **更新者**：曹帅
 
-**更新内容**：数据处理代码
+**更新内容**：数据预处理核心代码
 
-### 新增代码文件
+* 实现异常值补齐（5 点以内插值）、时间戳线性对齐、以及坐标系转换（IMU 对齐 DVL）等基础逻辑。
 
-1. **process_rotate.py** - 数据处理脚本
+---
 
-### 主要内容
-
-* 异常值处理（5个数据异常以内补齐）
-* 重叠截断（从各传感器、真值同时有效的部分开始）
-* 时间戳对齐（线性插值）
-* IMU对齐DVL坐标系
-* 航位推算
-* BASE_DIR 主目录
-* SUB_DIR 子目录
-* FILE_GT 真值名称
-* MANUAL_OFFSET 手动调整初始航向角，填0自动寻找角度
-* LIMIT_COUNT 决定连续异常值补齐最大数量，默认为5

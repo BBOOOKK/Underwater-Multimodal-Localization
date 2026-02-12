@@ -1,0 +1,24 @@
+model_param:
+  # 1. 维度必须匹配 (9通道 = 6 IMU + 3 DVL)
+  in_dim: 9
+  output_dim: 2  # 预测 2D 速度 (X, Y)
+
+  # 2. 网络宽度 (配合代码中的 c0)
+  c0: 32
+  dropout: 0.1   # 建议 0.1，太高(0.6)会导致欠拟合
+
+  # 3. ResNet 结构参数 (必须提供 ks 和 ds)
+  # ks: Kernel Size (卷积核大小)
+  # ds: Dilation Rate (膨胀率, 扩大感受野)
+  # 对应 layer_sizes: [1, 1, 1, 1] 的深度
+  ks: [7, 7, 7, 7]
+  ds: [4, 4, 4, 4]
+
+  # 4. 时间窗口 (保持不变)
+  past_time: 0.0
+  window_time: 1.0
+  future_time: 0.0
+
+  # [注意] 以下参数在当前 model_lstm.py 中已被硬编码或弃用，写在这里仅作备忘，不影响运行
+  # lstm_size: 128 (代码强制设为 128)
+  # lstm_layers: 2 (代码强制设为 2)
